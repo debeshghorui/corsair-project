@@ -1,0 +1,25 @@
+.landing {
+  --landing-primary: #1b1938;
+  --landing-primary-deep: #0e0c1f;
+  --landing-on-primary: #ffffff;
+  --landing-ink: #292827;
+  --landing-ink-mute: #73706d;
+  --landing-ink-faint: #9a9794;
+  --landing-canvas: #ffffff;
+  --landing-canvas-soft: #fafaf8;
+  --landing-violet-soft: #c9b4fa;
+  --landing-teal-deep: #0e3030;
+  --landing-teal-mid: #155555;
+  --landing-hairline: #e8e4dd;
+  --landing-hairline-dark: #3f3a52;
+  --landing-on-dark-mute: #bcbac9;
+  --landing-on-dark-faint: #5a5772;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -12,6 +12,21 @@ datasource db {
   provider = "postgresql"
 }
 
+// Encrypted per-tenant secret (e.g. BYOK OpenAI API key). Value is AES-256-GCM ciphertext.
+// userId is the Clerk user id (= Corsair tenant id).
+model TenantSecret {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz
+  userId     String   @map("user_id")
+  name       String
+  ciphertext String
+
+  @@unique([userId, name])
+  @@index([userId])
+  @@map("tenant_secrets")
+}
+
 // Define your data model here and run `npx prisma generate` to generate the Prisma Client.
 model CorsairIntegration {
   id        String           @id
