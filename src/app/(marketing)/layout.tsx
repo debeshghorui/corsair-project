@@ -1,22 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 
 import "@/components/landing/landing-tokens.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-landing",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Corsair Mail — Fast Gmail & Calendar",
+  title: "Mainframe® — Creative Studio & Labs",
   description:
-    "A faster Gmail + Google Calendar workflow, powered by Corsair. Keyboard-first inbox, AI priority triage, and instant local search.",
+    "Meet A.R.I.A, Mainframe's Adaptive Response Interface Agent. Good taste tends to find us — now, what are we building?",
   openGraph: {
-    title: "Corsair Mail — Fast Gmail & Calendar",
+    title: "Mainframe® — Creative Studio & Labs",
     description:
-      "A faster Gmail + Google Calendar workflow, powered by Corsair.",
+      "Meet A.R.I.A, Mainframe's Adaptive Response Interface Agent.",
     type: "website",
   },
 };
@@ -26,5 +19,5 @@ export default function MarketingLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className={`landing ${inter.className}`}>{children}</div>;
+  return <div className="landing">{children}</div>;
 }
