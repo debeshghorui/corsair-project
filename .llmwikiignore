@@ -1,0 +1,8 @@
+# Excluded from wiki ingest (secrets, generated, vendor)
+.env*
+node_modules/
+.next/
+src/generated/
+*.pem
+coverage/
+.vercel/
