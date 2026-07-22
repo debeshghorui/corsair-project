@@ -1,32 +1,43 @@
 # Mail
 
-Fast cached inbox with split reading pane, compose/reply, label actions, and keyboard shortcuts.
+Fast cached inbox with split reading pane, compose/reply/draft, label actions, and keyboard shortcuts.
 
 ## Data flow
 
-1. Messages read from **Corsair local cache** (not Gmail API per view).
-2. `gmailService` wraps `@corsair-dev/gmail` via `withTenant(tenantId)`.
-3. Sync: OAuth callback backfills; `POST /api/mail/sync` polls; webhooks push updates.
-4. UI: `src/app/(app)/mail/page.tsx` + mail components.
+1. Lists render from the **Corsair local cache** (`client.gmail.db.messages.*`) — no Gmail API per view.
+2. `gmailService` wraps `@corsair-dev/gmail` via `tenantClient()` and self-seeds an empty cache (`seedCache`).
+3. Reads/detail (`getMessage`), sends, and label mutations hit the Gmail API, then sync the cache (`syncCachedLabels`).
+4. Sync sources: OAuth `backfill`, `POST /api/mail/sync` polling, and webhooks.
 
-## Key files — server
+## gmailService methods
 
-| File | Role |
+File: `src/server/services/gmailService.ts`
+
+| Method | Role |
 | --- | --- |
-| `src/server/services/gmailService.ts` | List/get/send/draft/modify/trash |
-| `src/server/actions/mailActions.ts` | Server actions: compose, reply, archive, star… |
-| `src/types/mail.ts` | Mail domain types |
-| `src/lib/mime.ts` | RFC 822 message building |
-| `src/lib/format.ts` | Display formatting |
+| `listByLabel(label, limit)` | Cached list for a label (seeds if empty) |
+| `cachedMessages(limit)` | All parsed cached messages |
+| `cachedByIds(ids)` | Cached messages for ids, input order preserved |
+| `seedCache(label, max)` | Fetch full messages into cache |
+| `getMessage(id)` | Full message + parsed HTML/text body |
+| `listLabels()` | User labels with unread counts |
+| `send` / `reply` / `createDraft` | Outbound mail (RFC 822 via `mime.ts`) |
+| `modifyLabels` / `archive` / `markRead` / `markUnread` / `setStarred` / `trash` | Label + state mutations |
+
+## Server actions
+
+File: `src/server/actions/mailActions.ts` (all call `requireUser()` then `revalidatePath("/mail")`)
+
+`sendEmailAction`, `saveDraftAction`, `replyAction`, `archiveAction`, `trashAction`, `toggleStarAction`, `markReadAction`. Plain-text bodies are converted to HTML (`textToHtml`).
 
 ## Key files — UI
 
 | File | Role |
 | --- | --- |
 | `src/app/(app)/mail/page.tsx` | Inbox page |
-| `src/components/mail/MailList.tsx` | Message list |
+| `src/components/mail/MailList.tsx` | Message list (priority dots via `getPriorityMap`) |
 | `src/components/mail/MailBody.tsx` | Reading pane body |
-| `src/components/mail/ReadingPaneActions.tsx` | Archive, trash, star actions |
+| `src/components/mail/ReadingPaneActions.tsx` | Archive, trash, star, read actions |
 | `src/components/mail/ComposeDialog.tsx` | Compose / reply dialog |
 | `src/components/mail/MailShortcuts.tsx` | `j`/`k`/`e`/`x`/`c` keyboard nav |
 | `src/components/mail/RealtimePoller.tsx` | 30s polling fallback |
@@ -42,17 +53,18 @@ Fast cached inbox with split reading pane, compose/reply, label actions, and key
 | `x` | Close message |
 | `c` | Compose |
 | `/` | Focus search |
-| `g i` | Go to inbox |
+| `g i` / `g c` | Go to inbox / calendar |
 | `⌘K` | Command palette |
 | `⌘J` | Toggle agent |
 
-Implemented in `MailShortcuts.tsx` and `CommandPalette.tsx`.
+Implemented in `MailShortcuts.tsx` and `src/components/app/CommandPalette.tsx`.
 
 ## API routes
 
 | Route | Method | Role |
 | --- | --- | --- |
-| `/api/mail/sync` | POST | Poll Gmail into cache |
+| `/api/mail/sync` | POST | Poll Gmail into the cache |
+| `/api/ai/index` | POST | Classify + embed cached mail |
 
 ## Related
 

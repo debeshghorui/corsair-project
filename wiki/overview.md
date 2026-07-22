@@ -6,14 +6,16 @@ Corsair Mail is a Superhuman-style Gmail + Google Calendar client built on [Cors
 
 | Layer | Technology |
 | --- | --- |
-| Framework | Next.js 16 App Router, React 19, TypeScript |
-| Styling | Tailwind v4, shadcn/ui, `lucide-react` |
+| Framework | Next.js `16.2.9` (App Router), React `19.2.4`, TypeScript 5 |
+| Styling | Tailwind v4, shadcn/ui (`radix-ui`), `lucide-react` |
 | Database | Neon Postgres + pgvector |
-| ORM | Prisma 7 (`@prisma/adapter-pg`) |
-| Auth | Clerk (`@clerk/nextjs`) |
-| Integrations | `@corsair-dev/gmail`, `@corsair-dev/googlecalendar`, `@corsair-dev/mcp` |
-| AI | OpenAI BYOK per tenant via `@openai/agents` |
-| Runtime | Bun |
+| ORM | Prisma 7 (`@prisma/adapter-pg` over a `pg` Pool) |
+| Auth | Clerk (`@clerk/nextjs` v7) |
+| Integrations | `@corsair-dev/gmail`, `@corsair-dev/googlecalendar`, `@corsair-dev/mcp`, `@corsair-dev/cli` |
+| AI | OpenAI BYOK per tenant via `@openai/agents` + `openai` |
+| Runtime / PM | Bun |
+
+> `@corsair-dev/github` is a listed dependency but the root Corsair instance only loads the `gmail` and `googlecalendar` plugins (`src/server/corsair.ts`).
 
 ## Source layout (`src/`)
 

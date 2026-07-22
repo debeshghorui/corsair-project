@@ -1,14 +1,24 @@
 # Calendar
 
-Google Calendar integration for upcoming events and quick invites (~3 week window).
+Google Calendar integration for upcoming events and quick invites, via `@corsair-dev/googlecalendar`.
 
-## Key files — server
+## calendarService methods
 
-| File | Role |
+File: `src/server/services/calendarService.ts` (each uses `tenantClient()`)
+
+| Method | Role |
 | --- | --- |
-| `src/server/services/calendarService.ts` | List/create/update/delete events, free/busy |
-| `src/server/actions/calendarActions.ts` | Server actions for invites and mutations |
-| `src/types/calendar.ts` | Calendar domain types |
+| `listEvents(rangeDays = 14, max = 100)` | Upcoming events in a day-range window (`singleEvents`, ordered by start) |
+| `createInvite(input)` | Create event; resolves time zone (defaults to system), `sendUpdates: "all"` |
+| `updateEvent(id, changes)` | Partial update (title/start/end/description/location), `sendUpdates: "all"` |
+| `deleteEvent(id)` | Delete event, `sendUpdates: "all"` |
+| `getAvailability(timeMin, timeMax)` | Free/busy for `primary` calendar |
+
+Events are normalized to the `CalendarEvent` type (`src/types/calendar.ts`), including attendees with `responseStatus`.
+
+## Server actions
+
+File: `src/server/actions/calendarActions.ts` — invite/update/delete server actions used by the UI.
 
 ## Key files — UI
 
@@ -18,11 +28,10 @@ Google Calendar integration for upcoming events and quick invites (~3 week windo
 | `src/components/calendar/EventList.tsx` | Upcoming events list |
 | `src/components/calendar/QuickInvite.tsx` | Create event with attendees |
 
-## Corsair plugin
+## Notes
 
-Uses `@corsair-dev/googlecalendar` via root `corsair` instance, scoped with `withTenant(tenantId)`.
-
-Invites use `sendUpdates: all` so attendees receive email.
+- Invites use `sendUpdates: "all"` so attendees receive email.
+- Time zones default to `Intl.DateTimeFormat().resolvedOptions().timeZone` when not provided.
 
 ## Related
 
