@@ -1,6 +1,6 @@
 import { requireUser } from "@/server/auth/session";
 import { calendarService } from "@/server/services/calendarService";
-import { QuickInvite } from "@/components/calendar/QuickInvite";
+import { QuickInviteButton } from "@/components/calendar/QuickInvite";
 import { EventList } from "@/components/calendar/EventList";
 
 export default async function CalendarPage() {
@@ -17,7 +17,7 @@ export default async function CalendarPage() {
             weeks
           </p>
         </div>
-        <QuickInvite />
+        <QuickInviteButton />
       </header>
       <div className="mx-auto w-full max-w-2xl flex-1 overflow-y-auto px-6 py-6">
         <EventList events={events} />

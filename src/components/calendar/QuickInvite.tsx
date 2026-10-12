@@ -35,15 +35,10 @@ function defaultTimes() {
 export function QuickInvite({
   open,
   onOpenChange,
-  withTrigger = true,
 }: {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  withTrigger?: boolean;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }) {
-  const [internalOpen, setInternalOpen] = useState(false);
-  const isOpen = open ?? internalOpen;
-  const setOpen = onOpenChange ?? setInternalOpen;
   const [times] = useState(defaultTimes);
 
   const [state, action, pending] = useActionState<InviteState, FormData>(
@@ -52,16 +47,11 @@ export function QuickInvite({
   );
 
   useEffect(() => {
-    if (state.ok) setOpen(false);
-  }, [state.ok, setOpen]);
+    if (state.ok) onOpenChange(false);
+  }, [state.ok, onOpenChange]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={setOpen}>
-      {withTrigger && (
-        <Button size="sm" className="gap-2" onClick={() => setOpen(true)}>
-          <CalendarPlus className="size-4" /> New invite
-        </Button>
-      )}
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New event</DialogTitle>
@@ -114,5 +104,19 @@ export function QuickInvite({
         </form>
       </DialogContent>
     </Dialog>
+  );
+}
+
+/** Calendar-page launcher: owns its own open state and renders the trigger. */
+export function QuickInviteButton() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button size="sm" className="gap-2" onClick={() => setOpen(true)}>
+        <CalendarPlus className="size-4" /> New invite
+      </Button>
+      <QuickInvite open={open} onOpenChange={setOpen} />
+    </>
   );
 }

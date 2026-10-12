@@ -3,8 +3,7 @@ import { redirect } from "next/navigation";
 import { onboardingService } from "@/server/services/onboardingService";
 import { getTenantId } from "@/server/auth/session";
 
-/** Where to send a user immediately after Clerk sign-in / sign-up. */
-export const POST_AUTH_PATH = "/auth/continue";
+export { POST_AUTH_PATH } from "@/server/auth/paths";
 
 /** Resolve the final in-app destination once the user is authenticated. */
 export async function postAuthDestination(): Promise<"/mail" | "/onboarding"> {
@@ -15,7 +14,7 @@ export async function postAuthDestination(): Promise<"/mail" | "/onboarding"> {
   return status.complete ? "/mail" : "/onboarding";
 }
 
-/** Redirect an authenticated user to mail or onboarding. */
+/** Redirect a signed-in session to mail or onboarding. */
 export async function redirectAfterAuth(): Promise<never> {
   redirect(await postAuthDestination());
 }

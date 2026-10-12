@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useClerk } from "@clerk/nextjs";
 import { Calendar, Inbox, LogOut, Sparkles } from "lucide-react";
 
+import { useAuthActions } from "@/components/auth/actions";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -20,7 +20,7 @@ export function AppSidebar({
   onOpenAgent?: () => void;
 }) {
   const pathname = usePathname();
-  const { signOut } = useClerk();
+  const { signOut } = useAuthActions();
   const display = user.name || user.email;
   const initial = display.charAt(0).toUpperCase();
 
@@ -73,7 +73,7 @@ export function AppSidebar({
         </div>
         <button
           type="button"
-          onClick={() => signOut({ redirectUrl: "/" })}
+          onClick={() => signOut("/")}
           className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground"
         >
           <span className="grid size-7 shrink-0 place-items-center rounded-full bg-sidebar-accent text-xs font-semibold">

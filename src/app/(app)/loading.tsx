@@ -1,5 +1,3 @@
-import { auth } from "@clerk/nextjs/server";
-
 export default function AppLoading() {
   return (
     <div className="flex min-h-dvh items-center justify-center">

@@ -1,6 +1,6 @@
 import { redirectAfterAuth } from "@/server/auth/postAuth";
 
-/** Clerk lands here after sign-in/up; we route to onboarding or mail. */
+/** Sign-in lands here; we route to onboarding or mail. */
 export async function GET() {
   return redirectAfterAuth();
 }

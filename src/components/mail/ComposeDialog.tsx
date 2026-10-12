@@ -18,41 +18,26 @@ import {
   type ComposeState,
 } from "@/server/actions/mailActions";
 
-type Props = {
-  /** Controlled open state (used by command palette / shortcuts). */
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  /** Render a default trigger button. */
-  withTrigger?: boolean;
-  defaults?: { to?: string; subject?: string; body?: string };
+type ComposeDefaults = { to?: string; subject?: string; body?: string };
+
+type DialogProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  defaults?: ComposeDefaults;
 };
 
-export function ComposeDialog({
-  open,
-  onOpenChange,
-  withTrigger = true,
-  defaults,
-}: Props) {
-  const [internalOpen, setInternalOpen] = useState(false);
-  const isOpen = open ?? internalOpen;
-  const setOpen = onOpenChange ?? setInternalOpen;
-
+export function ComposeDialog({ open, onOpenChange, defaults }: DialogProps) {
   const [state, action, pending] = useActionState<ComposeState, FormData>(
     sendEmailAction,
     { ok: false, error: null },
   );
 
   useEffect(() => {
-    if (state.ok) setOpen(false);
-  }, [state.ok, setOpen]);
+    if (state.ok) onOpenChange(false);
+  }, [state.ok, onOpenChange]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={setOpen}>
-      {withTrigger && (
-        <Button size="sm" onClick={() => setOpen(true)} className="gap-2">
-          <PenSquare className="size-4" /> Compose
-        </Button>
-      )}
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-xl">
         <DialogHeader>
           <DialogTitle>New message</DialogTitle>
@@ -92,5 +77,19 @@ export function ComposeDialog({
         </form>
       </DialogContent>
     </Dialog>
+  );
+}
+
+/** Mail-page launcher: owns its own open state and renders the trigger. */
+export function ComposeButton({ defaults }: { defaults?: ComposeDefaults }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button size="sm" onClick={() => setOpen(true)} className="gap-2">
+        <PenSquare className="size-4" /> Compose
+      </Button>
+      <ComposeDialog open={open} onOpenChange={setOpen} defaults={defaults} />
+    </>
   );
 }
