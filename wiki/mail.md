@@ -38,7 +38,7 @@ File: `src/server/actions/mailActions.ts` (all call `requireUser()` then `revali
 | `src/components/mail/MailList.tsx` | Message list (priority dots via `getPriorityMap`) |
 | `src/components/mail/MailBody.tsx` | Reading pane body |
 | `src/components/mail/ReadingPaneActions.tsx` | Archive, trash, star, read actions |
-| `src/components/mail/ComposeDialog.tsx` | Compose / reply dialog |
+| `src/components/mail/ComposeDialog.tsx` | `ComposeDialog` (controlled) and `ComposeButton` (page launcher) |
 | `src/components/mail/MailShortcuts.tsx` | `j`/`k`/`e`/`x`/`c` keyboard nav |
 | `src/components/mail/RealtimePoller.tsx` | 30s polling fallback |
 | `src/components/mail/InboxAiIndexer.tsx` | Triggers AI classify + embed |

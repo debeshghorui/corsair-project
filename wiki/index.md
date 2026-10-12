@@ -7,7 +7,7 @@
 | Page | Summary |
 | --- | --- |
 | [overview.md](./overview.md) | Product purpose, tech stack, layer diagram |
-| [auth-routing.md](./auth-routing.md) | Clerk auth, `proxy.ts`, sign-in routes, post-auth flow |
+| [auth-routing.md](./auth-routing.md) | Session interface, Clerk adapter, `proxy.ts`, post-auth flow |
 | [onboarding.md](./onboarding.md) | Connect Gmail/Calendar, BYOK OpenAI key, completion checks |
 | [mail.md](./mail.md) | Cached inbox, compose/reply, labels, keyboard shortcuts |
 | [calendar.md](./calendar.md) | Events list, quick invite, server actions |

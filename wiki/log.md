@@ -22,3 +22,9 @@ Append-only record of wiki ingests and maintenance. Newest entries at the bottom
   - Documented real method names: `aiService.classifyPriority/embed` + `AI_MODELS`, `aiIndexService.indexMessage/indexCachedBatch`, `messageAiRepo.*`, `searchService.search`, `agentService.run` (maxTurns 12), `gmailService.*`, `calendarService.*`, `onboardingService.getStatus`.
   - `env.ts` accessors are functions (`env.appUrl()` etc.); `SECRET_OPENAI_KEY = "openai_api_key"`.
   - Pinned versions (Next 16.2.9, React 19.2.4) and noted unused `@corsair-dev/github` dep.
+
+## [2026-10-12] lint — auth provider seam
+
+- **Operation:** lint after the session interface was split from the Clerk adapter
+- **Pages updated:** auth-routing, overview, common-tasks, mail, calendar, data-layer, index
+- **Notes:** Removed a root `GLOSSARY.md` and `docs/adr/0001-auth-provider-seam.md`. Session and tenant language, and how to swap the auth provider, live on [auth-routing.md](./auth-routing.md).

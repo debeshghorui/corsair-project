@@ -42,7 +42,7 @@ Scope every per-user operation through `@/server/tenant`:
 ```ts
 import { tenantClient, tenantClientFor } from "@/server/tenant";
 
-const client = await tenantClient();          // current Clerk user
+const client = await tenantClient();          // current session
 const scoped = tenantClientFor(tenantId);      // explicit tenant id
 
 await client.gmail.db.messages.list({ limit: 400 });

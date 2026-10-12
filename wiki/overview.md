@@ -22,21 +22,21 @@ Corsair Mail is a Superhuman-style Gmail + Google Calendar client built on [Cors
 ```
 lib/           → env, db pool, prisma, crypto, mime, format
 server/
-  auth/        → Clerk session helpers, post-auth redirect
+  auth/        → Session interface, Clerk adapter, post-auth redirect
   corsair.ts   → Root multi-tenant Corsair instance
   tenant.ts    → withTenant() scoping
   repositories/→ secretsRepo, messageAiRepo, integrationsRepo
   services/    → Business logic (gmail, calendar, ai, search, agent, webhook…)
   actions/     → "use server" form actions
 app/           → App Router pages + API routes
-components/    → ui/, app/, mail/, calendar/, agent/, onboarding/, landing/
+components/    → ui/, app/, auth/, mail/, calendar/, agent/, onboarding/, landing/
 types/         → mail.ts, calendar.ts
-proxy.ts       → Clerk middleware (Next.js 16 — NOT middleware.ts)
+proxy.ts       → Request gate (Next.js 16 — NOT middleware.ts)
 ```
 
 ## Multi-tenancy
 
-- **Tenant id = Clerk `userId`.** No local users table.
+- **Tenant id = session id.** The Clerk adapter fills that id from Clerk's user id. No local users table.
 - All Corsair ops use `corsair.withTenant(tenantId)` — see [data-layer.md](./data-layer.md).
 - Google OAuth app credentials are shared; per-tenant OAuth tokens and BYOK secrets are isolated.
 

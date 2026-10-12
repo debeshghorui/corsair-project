@@ -26,7 +26,7 @@ File: `src/server/actions/calendarActions.ts` — invite/update/delete server ac
 | --- | --- |
 | `src/app/(app)/calendar/page.tsx` | Calendar page |
 | `src/components/calendar/EventList.tsx` | Upcoming events list |
-| `src/components/calendar/QuickInvite.tsx` | Create event with attendees |
+| `src/components/calendar/QuickInvite.tsx` | `QuickInvite` (controlled) and `QuickInviteButton` (page launcher) |
 
 ## Notes
 

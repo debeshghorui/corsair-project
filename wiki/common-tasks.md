@@ -4,8 +4,9 @@ Quick lookup: **I need to change X → edit Y**.
 
 | I need to… | Start here |
 | --- | --- |
-| Add a public (unauthenticated) route | `src/proxy.ts` |
-| Change sign-in / sign-up pages | `src/app/sign-in/`, `src/app/sign-up/` |
+| Add a public (unauthenticated) route | `src/server/auth/public-routes.ts` |
+| Change sign-in / sign-up screens | `src/components/auth/clerk/screens.tsx` |
+| Replace Clerk with another auth provider | [auth-routing.md](./auth-routing.md) — adapter table |
 | Change where users go after login | `src/server/auth/postAuth.ts` |
 | Change onboarding requirements | `src/server/services/onboardingService.ts` |
 | Fix inbox not updating | `webhookService.handle` / `registerWatches`, `RealtimePoller.tsx`, `/api/mail/sync` |
