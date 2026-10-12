@@ -28,3 +28,9 @@ Append-only record of wiki ingests and maintenance. Newest entries at the bottom
 - **Operation:** lint after the session interface was split from the Clerk adapter
 - **Pages updated:** auth-routing, overview, common-tasks, mail, calendar, data-layer, index
 - **Notes:** Removed a root `GLOSSARY.md` and `docs/adr/0001-auth-provider-seam.md`. Session and tenant language, and how to swap the auth provider, live on [auth-routing.md](./auth-routing.md).
+
+## [2026-10-12] lint — restore env template
+
+- **Operation:** add the missing `.env.example` and un-ignore it in `.gitignore`
+- **Source:** `src/lib/env.ts`, `README.md` environment table, Clerk keys read by `@clerk/nextjs`
+- **Notes:** OpenAI stays BYOK (not an env var). Clerk sign-in paths stay commented because they are set in `src/components/auth/clerk/provider.tsx`.
