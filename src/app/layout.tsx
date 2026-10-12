@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { themeInitScript } from "@/components/theme-init-script";
 import { POST_AUTH_PATH } from "@/server/auth/postAuth";
 import "./globals.css";
 
@@ -42,6 +43,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       >
         <head>
+          <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
           <link
             rel="stylesheet"
             href="https://db.onlinewebfonts.com/c/5ac3fe7c6abd2f62067f266d89671492?family=HelveticaNowDisplay-Medium"
@@ -54,7 +56,7 @@ export default function RootLayout({
         <body className="min-h-full flex flex-col">
           <ThemeProvider
             attribute="class"
-            defaultTheme="light"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >

@@ -13,7 +13,7 @@ export function LandingPage() {
   return (
     <LandingMotionConfig>
       <div className="relative min-h-dvh overflow-hidden">
-        {/* Fixed aurora mesh read through every glass surface */}
+        {/* Flat black ground */}
         <LiquidBackground />
 
         <MainframeNav />

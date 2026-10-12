@@ -1,3 +1,4 @@
+import { MainframeMark } from "@/components/brand/MainframeMark";
 import { GlassCard } from "@/components/landing/GlassCard";
 import { Reveal } from "@/components/landing/MainframeReveal";
 
@@ -54,8 +55,9 @@ export function MainframeOpenings() {
     >
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <span className="text-[13px] uppercase tracking-[0.2em] text-black/45 dark:text-white/45">
-            ✳︎ Get Started
+          <span className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.2em] text-black/45 dark:text-white/45">
+            <MainframeMark className="size-3.5" />
+            Get Started
           </span>
         </Reveal>
 
@@ -77,7 +79,7 @@ export function MainframeOpenings() {
                 className="group flex items-center justify-between gap-6 rounded-3xl px-5 py-6 transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.05]"
               >
                 <div className="flex items-baseline gap-5">
-                  <span className="text-[14px] font-medium tabular-nums text-sky-500 dark:text-sky-400">
+                  <span className="text-[14px] font-medium tabular-nums text-black/45 dark:text-white/45">
                     {step.index}
                   </span>
                   <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-5">

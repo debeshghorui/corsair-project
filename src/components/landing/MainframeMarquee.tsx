@@ -1,3 +1,5 @@
+import { MainframeMark } from "@/components/brand/MainframeMark";
+
 const ITEMS = [
   "Gmail",
   "Calendar",
@@ -20,11 +22,8 @@ function MarqueeRow() {
           >
             {item}
           </span>
-          <span
-            aria-hidden
-            className="select-none text-[22px] text-black/30 sm:text-[34px] dark:text-white/30"
-          >
-            ✳︎
+          <span aria-hidden className="text-black/30 dark:text-white/30">
+            <MainframeMark className="size-[22px] sm:size-[34px]" />
           </span>
         </span>
       ))}

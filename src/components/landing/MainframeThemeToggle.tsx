@@ -1,9 +1,11 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { AnimatePresence, motion } from "motion/react";
 import { Moon, Sun } from "lucide-react";
+
+const ICON_CLASS = "h-[18px] w-[18px]";
 
 type ViewTransitionDocument = Document & {
   startViewTransition?: (callback: () => void) => { ready: Promise<void> };
@@ -23,7 +25,17 @@ export function MainframeThemeToggle({
 }) {
   const { resolvedTheme, setTheme } = useTheme();
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const skipEnter = useRef(true);
+  const [mounted, setMounted] = useState(false);
   const isDark = resolvedTheme === "dark";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted) skipEnter.current = false;
+  }, [mounted]);
 
   const toggle = () => {
     const next = isDark ? "light" : "dark";
@@ -70,22 +82,33 @@ export function MainframeThemeToggle({
       transition={{ type: "spring", stiffness: 400, damping: 22 }}
       className={`lg-keycap relative inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full text-black dark:text-white ${className}`}
     >
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={isDark ? "sun" : "moon"}
-          initial={{ y: 14, opacity: 0, rotate: -90 }}
-          animate={{ y: 0, opacity: 1, rotate: 0 }}
-          exit={{ y: -14, opacity: 0, rotate: 90 }}
-          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inline-flex"
-        >
-          {isDark ? (
-            <Sun className="h-[18px] w-[18px]" />
-          ) : (
-            <Moon className="h-[18px] w-[18px]" />
-          )}
-        </motion.span>
-      </AnimatePresence>
+      {mounted ? (
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={isDark ? "sun" : "moon"}
+            initial={
+              skipEnter.current
+                ? false
+                : { y: 14, opacity: 0, rotate: -90 }
+            }
+            animate={{ y: 0, opacity: 1, rotate: 0 }}
+            exit={{ y: -14, opacity: 0, rotate: 90 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inline-flex"
+          >
+            {isDark ? (
+              <Sun className={ICON_CLASS} />
+            ) : (
+              <Moon className={ICON_CLASS} />
+            )}
+          </motion.span>
+        </AnimatePresence>
+      ) : (
+        <span className="absolute inline-flex">
+          <Sun className={`${ICON_CLASS} hidden dark:block`} />
+          <Moon className={`${ICON_CLASS} dark:hidden`} />
+        </span>
+      )}
     </motion.button>
   );
 }

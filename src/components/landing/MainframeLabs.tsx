@@ -1,3 +1,4 @@
+import { MainframeMark } from "@/components/brand/MainframeMark";
 import { GlassCard } from "@/components/landing/GlassCard";
 import { Reveal } from "@/components/landing/MainframeReveal";
 
@@ -27,8 +28,9 @@ export function MainframeLabs() {
     >
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <span className="text-[13px] uppercase tracking-[0.2em] text-black/45 dark:text-white/45">
-            ✳︎ Under the Hood
+          <span className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.2em] text-black/45 dark:text-white/45">
+            <MainframeMark className="size-3.5" />
+            Under the Hood
           </span>
         </Reveal>
 
@@ -45,7 +47,7 @@ export function MainframeLabs() {
           {EXPERIMENTS.map((item, index) => (
             <Reveal key={item.tag} delay={index * 0.08}>
               <GlassCard className="h-full p-8">
-                <span className="text-[13px] font-medium tracking-widest text-sky-500 dark:text-sky-400">
+                <span className="text-[13px] font-medium tracking-widest text-black/45 dark:text-white/45">
                   {item.tag}
                 </span>
                 <h3

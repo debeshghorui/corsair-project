@@ -1,3 +1,4 @@
+import { MainframeMark } from "@/components/brand/MainframeMark";
 import { GlassCard } from "@/components/landing/GlassCard";
 import { MainframeInboxPreview } from "@/components/landing/MainframeInboxPreview";
 import { Reveal } from "@/components/landing/MainframeReveal";
@@ -19,8 +20,9 @@ export function MainframeStudio() {
           {/* Copy — left */}
           <div>
             <Reveal>
-              <span className="text-[13px] uppercase tracking-[0.2em] text-black/45 dark:text-white/45">
-                ✳︎ The Product
+              <span className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.2em] text-black/45 dark:text-white/45">
+                <MainframeMark className="size-3.5" />
+                The Product
               </span>
             </Reveal>
 

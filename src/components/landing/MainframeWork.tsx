@@ -1,3 +1,4 @@
+import { MainframeMark } from "@/components/brand/MainframeMark";
 import { GlassCard } from "@/components/landing/GlassCard";
 import { Reveal } from "@/components/landing/MainframeReveal";
 
@@ -6,7 +7,6 @@ type Feature = {
   category: string;
   description: string;
   shortcut?: string;
-  glow: string;
 };
 
 const FEATURES: Feature[] = [
@@ -15,7 +15,6 @@ const FEATURES: Feature[] = [
     category: "AI · Triage",
     description:
       "Every message is classified Urgent, Important, Normal, or Low — by a fast, cheap model so nothing blocks render.",
-    glow: "from-rose-400/40 to-amber-300/30",
   },
   {
     title: "A.R.I.A Agent",
@@ -23,7 +22,6 @@ const FEATURES: Feature[] = [
     description:
       "Ask A.R.I.A to send a reply, create a calendar invite, or find a thread — it drives Gmail and Calendar through Corsair MCP tools.",
     shortcut: "⌘J",
-    glow: "from-violet-400/40 to-sky-400/30",
   },
   {
     title: "Instant Search",
@@ -31,7 +29,6 @@ const FEATURES: Feature[] = [
     description:
       "Keyword matches and semantic Smart Results from text-embedding-3-small — all queried locally in under a second.",
     shortcut: "/",
-    glow: "from-teal-300/40 to-emerald-400/30",
   },
   {
     title: "Command Palette",
@@ -39,7 +36,6 @@ const FEATURES: Feature[] = [
     description:
       "Compose, navigate, search, or summon the agent without the mouse. Vim-style j / k / e / x list navigation included.",
     shortcut: "⌘K",
-    glow: "from-sky-400/40 to-indigo-400/30",
   },
 ];
 
@@ -47,20 +43,13 @@ function FeatureCard({ feature }: { feature: Feature }) {
   return (
     <GlassCard className="group h-full p-2.5">
       <div className="relative aspect-[16/10] overflow-hidden rounded-[20px]">
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${feature.glow} transition-transform duration-500 ease-out group-hover:scale-110`}
-        />
+        <div className="absolute inset-0 bg-black/[0.04] dark:bg-white/[0.04]" />
         {feature.shortcut ? (
           <span className="lg-keycap absolute right-4 top-4 rounded-lg px-2.5 py-1 text-[14px] font-medium text-black dark:text-white">
             {feature.shortcut}
           </span>
         ) : (
-          <span
-            aria-hidden
-            className="absolute right-4 top-4 select-none text-[26px] text-black/25 dark:text-white/25"
-          >
-            ✳︎
-          </span>
+          <MainframeMark className="absolute right-4 top-4 size-7 text-black/25 dark:text-white/25" />
         )}
       </div>
       <div className="px-3 pb-3 pt-4">
@@ -92,8 +81,9 @@ export function MainframeWork() {
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="flex items-end justify-between border-b border-[var(--lg-hairline)] pb-6">
-            <span className="text-[13px] uppercase tracking-[0.2em] text-black/45 dark:text-white/45">
-              ✳︎ Features
+            <span className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.2em] text-black/45 dark:text-white/45">
+              <MainframeMark className="size-3.5" />
+              Features
             </span>
             <a
               href="/sign-up"

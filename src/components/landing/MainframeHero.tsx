@@ -35,16 +35,24 @@ export function MainframeHero() {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      <MainframeScrubVideo className="absolute inset-0 z-0 h-full w-full object-cover" />
+      <MainframeScrubVideo className="absolute inset-0 z-0 h-full w-full object-cover [filter:contrast(1.12)_brightness(0.94)] dark:[filter:contrast(1.05)_brightness(1.14)]" />
 
-      {/* Left scrim only — keep the right side clear for the video subject */}
+      {/* Soft scrim behind the copy only — the subject stays clear */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-r from-[var(--lg-bg-base)] via-[var(--lg-bg-base)]/75 to-transparent"
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "linear-gradient(to right, color-mix(in srgb, var(--lg-bg-base) 78%, transparent) 0%, color-mix(in srgb, var(--lg-bg-base) 28%, transparent) 22%, transparent 46%)",
+        }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-48 bg-gradient-to-t from-[var(--lg-bg-base)] to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-24"
+        style={{
+          background:
+            "linear-gradient(to top, color-mix(in srgb, var(--lg-bg-base) 35%, transparent), transparent)",
+        }}
       />
 
       <div className="relative z-[1] mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-5 pb-16 pt-28 sm:px-8 md:px-10 lg:pt-32">
@@ -65,9 +73,7 @@ export function MainframeHero() {
             Your inbox,
             <br />
             finally{" "}
-            <span className="lg-shimmer bg-gradient-to-r from-sky-500 via-violet-500 to-teal-400 bg-clip-text text-transparent">
-              fast
-            </span>
+            <span>fast</span>
             .
           </motion.h1>
 

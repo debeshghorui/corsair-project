@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 
+import { MainframeMark } from "@/components/brand/MainframeMark";
 import { GlassCard } from "@/components/landing/GlassCard";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -122,11 +123,11 @@ export function MainframeInboxPreview() {
             className="mt-2.5 flex items-center gap-2.5 rounded-2xl bg-black/[0.04] px-3 py-2.5 dark:bg-white/[0.05]"
           >
             <motion.span
-              className="text-[14px]"
+              className="text-black dark:text-white"
               animate={{ scale: [1, 1.18, 1] }}
               transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
             >
-              ✳︎
+              <MainframeMark className="size-3.5" />
             </motion.span>
             <span className="text-[12px] text-black/60 dark:text-white/60">
               <span className="font-medium text-black dark:text-white">A.R.I.A</span>{" "}

@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
+import { MainframeMark } from "@/components/brand/MainframeMark";
 import { MainframeThemeToggle } from "@/components/landing/MainframeThemeToggle";
-import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { label: "Product", href: "#studio" },
@@ -13,18 +13,43 @@ const NAV_LINKS = [
   { label: "Get started", href: "#openings" },
 ] as const;
 
-const SCROLL_THRESHOLD = 40;
+const SHRINK_AT = 72;
+const EXPAND_AT = 16;
+
+/** Soft ease-out: starts gently, then settles. The old expo curve slammed most of the squeeze into the first frames. */
+const SQUEEZE_TRANSITION =
+  "width 1.05s cubic-bezier(0.33, 0.7, 0.18, 1), max-width 1.05s cubic-bezier(0.33, 0.7, 0.18, 1), padding 1.05s cubic-bezier(0.33, 0.7, 0.18, 1)";
+
+function useMinWidth(minWidth: number) {
+  const query = `(min-width: ${minWidth}px)`;
+
+  return useSyncExternalStore(
+    (onChange) => {
+      const media = window.matchMedia(query);
+      media.addEventListener("change", onChange);
+      return () => media.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(query).matches,
+    () => true,
+  );
+}
 
 export function MainframeNav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const isSm = useMinWidth(640);
 
   useEffect(() => {
     let frame = 0;
     const handleScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        setScrolled(window.scrollY > SCROLL_THRESHOLD);
+        const y = window.scrollY;
+        setScrolled((isShrunk) => {
+          if (!isShrunk && y > SHRINK_AT) return true;
+          if (isShrunk && y < EXPAND_AT) return false;
+          return isShrunk;
+        });
       });
     };
 
@@ -36,20 +61,32 @@ export function MainframeNav() {
     };
   }, []);
 
+  const padX = isSm ? (scrolled ? 16 : 24) : scrolled ? 12 : 16;
+  const padY = isSm ? (scrolled ? 8 : 12) : scrolled ? 8 : 10;
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-30 px-3 pt-3 sm:px-5 sm:pt-4">
         <motion.div
           initial={{ y: -24, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className={cn(
-            "glass mx-auto flex items-center justify-between rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-            scrolled
-              ? "max-w-4xl px-3 py-2 sm:px-4"
-              : "max-w-6xl px-4 py-2.5 sm:px-6 sm:py-3",
-          )}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
+          <div
+            className="mx-auto"
+            style={{
+              width: scrolled ? "calc(100% - 36px)" : "calc(100% - 0px)",
+              maxWidth: scrolled ? 896 : 1152,
+              transition: SQUEEZE_TRANSITION,
+            }}
+          >
+          <div
+            className="glass flex items-center justify-between rounded-full"
+            style={{
+              padding: `${padY}px ${padX}px`,
+              transition: SQUEEZE_TRANSITION,
+            }}
+          >
           {/* Wordmark */}
           <a
             href="#"
@@ -57,11 +94,11 @@ export function MainframeNav() {
           >
             <motion.span
               aria-hidden
-              className="select-none text-[20px] leading-none"
+              className="grid size-5 shrink-0 place-items-center"
               animate={{ rotate: [0, 360] }}
               transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
             >
-              ✳︎
+              <MainframeMark className="size-5" />
             </motion.span>
             <span
               className="text-[18px] tracking-tight sm:text-[20px]"
@@ -125,6 +162,8 @@ export function MainframeNav() {
                 }`}
               />
             </button>
+          </div>
+          </div>
           </div>
         </motion.div>
       </header>
