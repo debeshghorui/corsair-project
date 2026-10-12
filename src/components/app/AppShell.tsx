@@ -105,16 +105,8 @@ export function AppShell({ children, user }: Props) {
         onNewInvite={() => setInviteOpen(true)}
         onOpenAgent={() => setAgentOpen(true)}
       />
-      <ComposeDialog
-        open={composeOpen}
-        onOpenChange={setComposeOpen}
-        withTrigger={false}
-      />
-      <QuickInvite
-        open={inviteOpen}
-        onOpenChange={setInviteOpen}
-        withTrigger={false}
-      />
+      <ComposeDialog open={composeOpen} onOpenChange={setComposeOpen} />
+      <QuickInvite open={inviteOpen} onOpenChange={setInviteOpen} />
     </div>
   );
 }

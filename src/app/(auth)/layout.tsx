@@ -1,14 +1,13 @@
-import { auth } from "@clerk/nextjs/server";
-
 import { redirectAfterAuth } from "@/server/auth/postAuth";
+import { getCurrentUser } from "@/server/auth/session";
 
 export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { userId } = await auth();
-  if (userId) await redirectAfterAuth();
+  const user = await getCurrentUser();
+  if (user) await redirectAfterAuth();
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-8 bg-muted/30 px-4">

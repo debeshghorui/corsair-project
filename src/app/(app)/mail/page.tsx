@@ -5,7 +5,7 @@ import { gmailService } from "@/server/services/gmailService";
 import { messageAiRepo } from "@/server/repositories/messageAiRepo";
 import { cn } from "@/lib/utils";
 import { formatDate, parseAddress } from "@/lib/format";
-import { ComposeDialog } from "@/components/mail/ComposeDialog";
+import { ComposeButton } from "@/components/mail/ComposeDialog";
 import { MailList } from "@/components/mail/MailList";
 import { MailBody } from "@/components/mail/MailBody";
 import { ReadingPaneActions } from "@/components/mail/ReadingPaneActions";
@@ -77,7 +77,7 @@ export default async function MailPage({
         <header className="flex flex-col gap-3 border-b px-4 py-3">
           <div className="flex items-center justify-between gap-2">
             <h1 className="text-lg font-semibold tracking-tight">Mail</h1>
-            <ComposeDialog />
+            <ComposeButton />
           </div>
           {loadError && (
             <p className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">

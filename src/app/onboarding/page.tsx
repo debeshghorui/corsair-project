@@ -3,7 +3,7 @@ import { Calendar, Check, Mail, Sparkles } from "lucide-react";
 
 import { requireUser } from "@/server/auth/session";
 import { onboardingService } from "@/server/services/onboardingService";
-import { OnboardingSignOut } from "@/components/onboarding/OnboardingSignOut";
+import { SignOutButton } from "@/components/auth/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,7 +28,7 @@ export default async function OnboardingPage() {
           </span>
           Corsair Mail
         </div>
-        <OnboardingSignOut />
+        <SignOutButton />
       </header>
 
       <div className="flex flex-col gap-1">
